@@ -27,27 +27,25 @@ class TLVViewModel : ViewModel() {
      * Parses a Hex TLV string into a List of [TLV] objects.
      * @param tlv The Hex string containing the TLV data.
      */
-    fun parse(tlv: String) = Executors.newSingleThreadExecutor().execute {
-        try {
-            // Parse the TLV string as a Hex string.
-            val tlvBytes = HexUtil.parseHex(tlv)
-            // Retrieve all the TLV values from the Hex string.
-            val parseResults = BerTlvParser().parse(tlvBytes)
-            // Create an empty list containing the results.
-            val records = mutableListOf<TLV>()
-            // Use the null-safe operator (?) to iterate through the results only if those are not null.
-            parseResults?.list?.forEach {
-                val tag = it?.tag?.toString()?.replace("- ", "")
-                val value = it?.hexValue?.fromHex() ?: ""
-                // Create a new TLV object using the extracted results.
-                records.add(TLV(getTagName(tag), value.length, value))
-            }
-            // Return the found results.
-            results.postValue(records)
-        } catch (e: Exception) {
-            // If something wrong happens, return an empty list.
-            results.postValue(mutableListOf())
+    fun parse(tlv: String) = try {
+        // Parse the TLV string as a Hex string.
+        val tlvBytes = HexUtil.parseHex(tlv)
+        // Retrieve all the TLV values from the Hex string.
+        val parseResults = BerTlvParser().parse(tlvBytes)
+        // Create an empty list containing the results.
+        val records = mutableListOf<TLV>()
+        // Use the null-safe operator (?) to iterate through the results only if those are not null.
+        parseResults?.list?.forEach {
+            val tag = it?.tag?.toString()?.replace("- ", "")
+            val value = it?.hexValue?.fromHex() ?: ""
+            // Create a new TLV object using the extracted results.
+            records.add(TLV(getTagName(tag), value.length, value))
         }
+        // Return the found results.
+        results.postValue(records)
+    } catch (e: Exception) {
+        // If something wrong happens, return an empty list.
+        results.postValue(mutableListOf())
     }
 
     /**
