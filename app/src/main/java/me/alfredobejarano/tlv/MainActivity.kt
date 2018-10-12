@@ -1,13 +1,11 @@
 package me.alfredobejarano.tlv
 
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_main.*
 import me.alfredobejarano.tlv.adapter.TLVRecordsAdapter
 import me.alfredobejarano.tlv.viewmodel.TLVViewModel
@@ -41,12 +39,8 @@ class MainActivity : AppCompatActivity() {
             (list?.adapter as TLVRecordsAdapter?)?.setResults(it)
         })
         // Listen when the user press ok in the TLV input view.
-        tlv_input?.setOnEditorActionListener { v, actionId, _ ->
-            // If the done button was pressed, send the text to the ViewModel.
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.parse((v as TextInputEditText).text?.toString() ?: "")
-            }
-            true
+        decode_button?.setOnClickListener {
+            viewModel.parse(tlv_input?.text?.toString() ?: "")
         }
     }
 }

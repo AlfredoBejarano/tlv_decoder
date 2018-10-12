@@ -29,4 +29,10 @@
 			app:layout_constraintTop_toBottomOf="@+id/textInputLayout" app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp" android:id="@+id/tlv_list"/>
+	<com.google.android.material.floatingactionbutton.FloatingActionButton android:layout_width="wrap_content"
+	                                                                       android:id="@+id/decode_button"
+	                                                                       android:src="@drawable/ic_done"
+	                                                                       android:layout_height="wrap_content"
+	                                                                       app:layout_constraintEnd_toEndOf="parent"
+	                                                                       app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
