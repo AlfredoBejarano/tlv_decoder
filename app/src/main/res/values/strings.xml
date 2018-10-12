@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">TLV</string>
+	<string name="app_name">TLV decoder</string>
 	<string name="unknown_tag">Unknown tag</string>
 	<string name="aid_tag">Application Identifier (AID) – card</string>
 	<string name="transaction_date_tag">Transaction Date</string>
