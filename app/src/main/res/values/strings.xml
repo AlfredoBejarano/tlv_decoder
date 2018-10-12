@@ -45,4 +45,6 @@
 	<string name="terminal_type_tag">Terminal Type</string>
 	<string name="transaction_sequence_tag">Transaction Sequence Counter</string>
 	<string name="issuer_country_code_tag">Issuer Country Code</string>
+	<string name="enter_tlv">TLV text</string>
+	<string name="no_values_found">No values were found</string>
 </resources>
