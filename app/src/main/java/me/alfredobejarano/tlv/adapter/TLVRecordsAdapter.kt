@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import me.alfredobejarano.tlv.R
 import me.alfredobejarano.tlv.data.TLV
+import me.alfredobejarano.tlv.utilities.fromHex
 
 /**
  *
@@ -37,8 +39,9 @@ class TLVRecordsAdapter(private var records: List<TLV>?) :
      * Assign values to the ViewHolder views.
      */
     override fun onBindViewHolder(holder: TLVRecordViewHolder, position: Int) {
+        val tag = records?.get(position)?.tag ?: R.string.unknown_tag
+        holder.tagView.hint = holder.itemView.context.getString(tag)
         holder.valueView.setText(records?.get(position)?.value ?: "")
-        holder.valueView.setHint(records?.get(position)?.tag ?: R.string.unknown_tag)
     }
 
     fun setResults(results: List<TLV>) {
@@ -51,5 +54,6 @@ class TLVRecordsAdapter(private var records: List<TLV>?) :
      */
     class TLVRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val valueView: TextInputEditText = itemView.findViewById(R.id.tlv_value)
+        val tagView: TextInputLayout = itemView.findViewById(R.id.textInputLayout)
     }
 }
