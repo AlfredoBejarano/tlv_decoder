@@ -4,9 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import junit.framework.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
 /**
  * Test case class for the TLVViewModel class.
@@ -15,40 +12,36 @@ import org.junit.runners.JUnit4
  * @version 1.0
  * @since 11/10/2018 - 09:01 PM
  */
-@RunWith(JUnit4::class)
 class TLVViewModelTest {
     /**
-     * Rule that tells to the LiveData objects to report results immediately in the current thread.
-     * The JUnit tests exist in a single thread as the JVM doesn't support multi-threaded operations.
+     * Rule that forces LiveData to report changes in the main thread.
      */
-    @get: Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+    @Rule
+    @JvmField
+    val instantExecutorRule = InstantTaskExecutorRule()
 
     /**
-     * Reference to a ViewModel to test.
+     * Reference to the view model class that is being tested.
      */
-    private val testViewModel = TLVViewModel()
+    private val viewModel = TLVViewModel()
 
     /**
-     * Test case that receives a single record TLV string
-     * and checks if the result only contains one element.
+     * Parses a single record TLV string and checks that
+     * it returns a single result list.
      */
     @Test
-    fun parse_successfulResult() {
-        testViewModel.results.observeForever {
-            assertEquals(1, it?.size)
-        }
-        testViewModel.parse("4F04AABB")
+    fun parseTest_withValidTLV() {
+        viewModel.parse("4F020102")
+        assertEquals(1, viewModel.results.value?.size)
     }
 
     /**
-     * Test case that receives a string, the results must be empty.
+     * Parses an invalid TLV string and checks that
+     * it returns an empty list.
      */
     @Test
-    fun parse_invalidTLVInput() {
-        testViewModel.results.observeForever {
-            assertEquals(0, it?.size)
-        }
-        testViewModel.parse("Hello world!")
+    fun parseTest_withInvalidTLV() {
+        viewModel.parse("JUnit")
+        assertEquals(0, viewModel.results.value?.size)
     }
 }
