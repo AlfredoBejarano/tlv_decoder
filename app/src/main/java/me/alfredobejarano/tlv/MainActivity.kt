@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         // Observe the results from the ViewModel.
         viewModel.results.observe(this, Observer {
             // If the list is empty, notify to the user that no results were found.
-            if (it?.isNotEmpty() == true) {
+            if (it?.isNotEmpty() == false) {
                 Snackbar.make(root, R.string.no_values_found, Snackbar.LENGTH_LONG).show()
             }
             // Set the results in the adapter.
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         })
         // Listen when the user press ok in the TLV input view.
         decode_button?.setOnClickListener {
-            viewModel.parse(tlv_input?.text?.toString() ?: "")
+            viewModel.parse(tlv_input?.text?.toString()?.toUpperCase() ?: "")
         }
     }
 }
